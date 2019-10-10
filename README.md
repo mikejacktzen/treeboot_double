@@ -1,9 +1,9 @@
-# A skeleton directory to jumpstart an analysis project
+# Prototype Double Treeboot
 
 # Setup
 
 1. Start a New Project in [Rstudio](https://www.rstudio.com/) 
-2. Use `Version Control` > `Git` > Repo Url `https://github.com/statsccpr/proj_skel.git`
+2. Use `Version Control` > `Git` > Repo Url `https://github.com/statsccpr/treeboot_double.git`
 3. Use a relevant domain-specific name for your local project (**NOT** `proj_skel`)
 4. Choose local destination for your local project
 
