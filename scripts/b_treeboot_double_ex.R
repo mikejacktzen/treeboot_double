@@ -56,8 +56,10 @@ str(resamp_2,1)
 # better idea, for 2nd level bootstrap
 # do another RDStreeboot:::.TBS()
 # need to puzzle/figure out how to recreate tree / adjacency
-# for each b, id_boot_1_tree = create_tree(id_boot_0[[b]])
+# for each b, id_boot_1_tree = remap_tree(id_boot_0[[b]],...)
+# key step is to match descendent ids to ancestor ids
 
-# create_tree = function(id_boot,table_edges_original){}
+# remap_tree = function(id_boot_desc,table_edges_ances){}
 
+# id_boot_1_tree = remap_tree(id_boot_0[[b]],...)
 id_boot_2_tree = RDStreeboot:::.TBS(id_boot_1_tree, B=B2)
