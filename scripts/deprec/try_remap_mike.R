@@ -65,7 +65,7 @@ id_boot_1_treeinfo = list(nodes=as.numeric(id_boot_1[[b]]),
 													edges=edges_sampled_b)
 str(id_boot_1_treeinfo)
 
-identical(id_boot_1_treeinfo,id_boot_2_treeinfo)
+# identical(id_boot_1_treeinfo,id_boot_2_treeinfo)
 
 # pre filtering using intersection same thing
 
