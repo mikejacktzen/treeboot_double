@@ -4,8 +4,9 @@
 
 # key step is to match descendent ids to ancestor ids
 
-id_boot_desc_b  # ids from 1 single bootstrap from level 1
-df_edges_ances_elig  # df of edge list of original data as eligible reference
+# id_boot_desc_b  # ids from 1 single bootstrap from level 1
+# df_edges_ances_elig  # df of edge list of original data as eligible reference
+
 
 remap_tree = function(id_boot_desc_b,df_edges_ances_elig){
 	require(dplyr)
@@ -35,6 +36,8 @@ remap_tree = function(id_boot_desc_b,df_edges_ances_elig){
 	
 	edges_sampled_b = left_join(x=data.frame(node2=as.numeric(id_boot_desc_b)),
 															y=df_edges_ances_elig)
+	
+	# note: node2 is original input
 	
 	# identical(edges_elig_samp_b_2,edges_elig_samp_b)
 	# identical(edges_sampled_b,edges_sampled_b_mask)
@@ -67,77 +70,50 @@ remap_tree = function(id_boot_desc_b,df_edges_ances_elig){
 	return(id_boot_1_treeinfo)
 }
 
-library(RDStreeboot)
-data(faux.network)
-set.seed(123);samp <- sample.RDS(faux.network$traits, faux.network$adj.mat, 100, 2, 3, c(0,1/3,1/3,1/3), TRUE)
+# library(igraph)
+# g0 <- graph_from_literal( 1 -+ 2 -+ 3 -+ 4,
+# 													1 -+ 5 -+6,
+# 													6-+7,6-+8,6-+9,
+# 													7-+10,7-+11,8-+12,
+# 													13,14)
+# 
+# plot(g0,layout=layout_as_tree,edge.arrow.mode=0)
+# class(g0)
+# 
+# # as_edgelist(g0)
+# list_v_and_e = igraph::as_data_frame(g0,what='both')
+# str(list_v_and_e,2)
+# 
+# # restructure into format RDStreeboot:::.TBS() needs
+# samp0 = list()
+# samp0$nodes = as.numeric(unlist(list_v_and_e$vertices,use.names = FALSE))
+# samp0$edges = data.frame(node1=as.numeric(list_v_and_e$edges$from),
+# 												 node2=as.numeric(list_v_and_e$edges$to))
+# 
+# ind_lev_1 = RDStreeboot:::.TBS(samp0, B=1)
+# tree_info_b1 = remap_tree(id_boot_desc_b=ind_lev_1[[1]],df_edges_ances_elig=samp0$edges)
+# 
+# # hand selected example
+# ind_lev_1_pick = c(1,2,3,4,
+# 									 5,6,7,10,11,
+# 									 7,10,11,
+# 									 7,11,11,
+# 									 13,13)
+# 
+# tree_info_b1_pick = remap_tree(id_boot_desc_b=ind_lev_1_pick,df_edges_ances_elig=samp0$edges)
+# tree_info_b1_pick
+# 
+# plot(graph_from_data_frame(d=tree_info_b1_pick$edges, 
+# 													 directed=TRUE, 
+# 													 vertices=unique(c(tree_info_b1_pick$edges[,1],
+# 													 									tree_info_b1_pick$edges[,2],
+# 													 									tree_info_b1_pick$nodes))),
+# 		 layout=layout_as_tree,
+# 		 vertex.size = 10,
+# 		 edge.arrow.mode=0,
+# 		 edge.arrow.size = 0.01,
+# 		 edge.arrow.width = 0.01)
+# 
+# 
+# id_dubboot_from_b1 = RDStreeboot:::.TBS(tree_info_b1_pick, B=5)
 
-str(samp,1)
-## estimate 80% and 95% confidence intervals
-samp=samp;B1=5
-
-# confirm edgelist ignores islands
-# confirm seed edge do not need NA parents
-# confirm nodes makes up for islands
-str(samp$edges,1)  
-str(samp$nodes,1)  
-
-set.seed(4321);id_boot_1 = RDStreeboot:::.TBS(samp, B=B1)
-
-str(id_boot_1,1)
-
-tree_info_b1 = remap_tree(id_boot_desc_b=id_boot_1[[1]],
-												 df_edges_ances_elig = samp$edges)
-
-tree_info_b2 = remap_tree(id_boot_desc_b=id_boot_1[[5]],
-												 df_edges_ances_elig = samp$edges)
-
-str(tree_info_b1,1)
-str(tree_info_b2,1)
-
-# level 2 treebootstrap
-B2=5
-id_dubboot_from_b1 = RDStreeboot:::.TBS(tree_info_b1, B=B2)
-
-id_dubboot_from_b2 = RDStreeboot:::.TBS(tree_info_b2, B=B2)
-
-lapply(id_dubboot_b1,sort)
-lapply(id_dubboot_b2,sort)
-
-library(igraph)
-
-par(mfrow=c(2,2))
-
-# original data
-plot(graph_from_edgelist(as.matrix(samp$edges),
-	directed = TRUE),
-	vertex.size = 0.1,
-	arrow.mode=0,
-	arrow.size = 0.01,
-	arrow.width = 0.01)
-
-library(igraph)
-# ?graph.data.frame
-# graph_from_data_frame
-# plot(graph.data.frame(tree_info_b1$edges,
-# 											vertices = tree_info_b1$nodes,
-# 											directed = T))
-# level 1
-plot(graph_from_edgelist(as.matrix(
-	remap_tree(id_boot_desc_b=id_boot_1[[1]],
-						 df_edges_ances_elig = samp$edges)$edges),
-	directed = TRUE),
-	vertex.size = 0.1,
-	arrow.mode=0,
-	arrow.size = 0.01,
-	arrow.width = 0.01)
-
-# level 2
-
-plot(graph_from_edgelist(as.matrix(
-	remap_tree(id_boot_desc_b=id_dubboot_b1[[1]],
-						 df_edges_ances_elig = samp$edges)$edges),
-	directed = TRUE),
-	vertex.size = 0.1,
-	arrow.mode=0,
-	arrow.size = 0.01,
-	arrow.width = 0.01)
