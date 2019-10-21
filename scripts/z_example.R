@@ -6,7 +6,8 @@ data(faux.network)
 ## draw RDS from network
 set.seed(123);samp <- sample.RDS(faux.network$traits, faux.network$adj.mat, 100, 2, 3, c(0,1/3,1/3,1/3), TRUE)
 
-source('scripts/remap_tree.R')
+# source('scripts/remap_tree.R')
+source('scripts/a_remap_tree_func.R')
 
 
 # select id bootstraps ----------------------------------------------------
@@ -43,7 +44,9 @@ for(b in seq_along(id_boot_1)){
 str(list_tib,2)
 # length(list_tib)
 
-source('scripts/c_estimates_after_dubboot.R')
+# source('scripts/c_estimates_after_dubboot.R')
+source('scripts/b_estimate_func.R')
+
 # View(compute_quants)
 compute_quants_possibly = purrr::possibly(compute_quants,NA)
 
@@ -53,17 +56,29 @@ est_samp_orig = compute_quants(df_orig)
 list_tib_b_bb = list_tib
 
 str(list_tib_b_bb,2)
-View(list_tib_b_bb[[1]])
-View(list_tib_b_bb[[1]][1])
+# View(list_tib_b_bb[[1]])
+# View(list_tib_b_bb[[1]][1])
 View(list_tib_b_bb[[1]][[2]])
 
-# list_tib_b_bb[[1]][,'ids_b']
-# list_tib_b_bb[[1]][,'ids_bb']
-# list_tib_b_bb[[2]]
-# str(list_tib_b_bb,2)
+# table structure is tibble
+# row 1 column 1 is a list of 1 vector
+# row 1 column 2 is a list of B2-many vectors
+
+list_tib_b_bb[[1]][,'ids_b']
+list_tib_b_bb[[1]][,'ids_bb']
+
+length((list_tib_b_bb[[1]][,'ids_b']))
+length(unlist(list_tib_b_bb[[1]][,'ids_b']))
+
+length((list_tib_b_bb[[1]][,'ids_bb']))
+length(unlist(list_tib_b_bb[[1]][['ids_bb']],recursive = F))
 
 # compute estimates -------------------------------------------------------
-# using pre-sampled ids
+# using pre-sampled level-1 ids, 
+# for loop
+# run tbs to get level-2 ids 
+# then compute required quantities of level 0, level 1, and level 2
+# end loop
 
 list_u_all = vector(mode='list',length=B1)
 
@@ -93,16 +108,11 @@ for(b in seq_along(id_boot_1)){
 	if(any(is.null(list_ind_bb_from_b))==TRUE){
 		u_b=NA
 	}else{
-	quant_boot_lvl_2 = lapply(list_ind_bb_from_b,
-														#list_ind_bb_from_b[[ind_good]],
-														FUN=function(xx){
-															# compute_quants(df_4_estimate = df_orig[unlist(xx),])
-															compute_quants_possibly(df_4_estimate = df_orig[unlist(xx),])
-														})
+		quant_boot_lvl_2 = lapply(list_ind_bb_from_b,
+															FUN=function(xx){
+																compute_quants_possibly(df_4_estimate = df_orig[unlist(xx),])
+															})
 		
-		# t_b_bb = data.frame(do.call(rbind,quant_boot_lvl_2))
-		# t_b = quant_boot_lvl_1[,'test_stat_samp']
-		# u_b = mean(t_b_bb <= t_b,na.rm = TRUE) 
 		
 		est_b_bb = data.frame(do.call(rbind,quant_boot_lvl_2))[,'est_samp']
 		se_b_bb = data.frame(do.call(rbind,quant_boot_lvl_2))[,'se_samp']
@@ -165,30 +175,3 @@ ref_quants$root_pivot_0_b %>% hist()
 ref_quants$u_b %>% hist()
 
 
-# deprecated
-
-
-# all the effort is to obtain 'q_hat'
-# q_hat_025 = quantile(unlist(list_u_all),0.025,na.rm = TRUE)
-# q_hat_975 = quantile(unlist(list_u_all),0.975,na.rm = TRUE)
-# 
-# 
-# ll = est_samp_orig$est_samp - q_hat_975*est_samp_orig$se_samp
-# ul = est_samp_orig$est_samp + q_hat_025*est_samp_orig$se_samp
-# data.frame(est_samp=est_samp_orig$est_samp,ll,ul)
-# est_samp_orig
-
-
-
-# comp_on_ss = function(xx){
-# 	if(is.null(xx)==TRUE){
-# 		return(data.frame(est_samp=NA,
-# 							 se_samp=NA,
-# 							 test_stat_samp=NA))
-# 	}else{
-# 	# compute_quants(df_4_estimate = df_orig[unlist(xx),])
-# 	return(compute_quants(df_4_estimate = df_orig[unlist(xx),]))
-# 	}
-# }
-
-# quant_boot_lvl_2 = list_ind_bb_from_b %>% purrr::map(comp_on_ss)

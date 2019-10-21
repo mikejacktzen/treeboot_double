@@ -1,27 +1,22 @@
 # to do a 2nd level treebootstrap with RDStreeboot:::.TBS()
 # need to puzzle/figure out how to recreate tree / adjacency
-# for each b, id_boot_1_tree = create_tree(id_boot_0[[b]])
-
+# for each b, id_boot_1_tree = remap_tree(id_boot_0[[b]],df_edges_ances_elig)
+# 
 # key step is to match descendent ids to ancestor ids
-
+# then simple left_join / lookup from original dataset edges (acting as eligible edges)
+# 
 # id_boot_desc_b  # ids from 1 single bootstrap from level 1
 # df_edges_ances_elig  # df of edge list of original data as eligible reference
 
+# side notes
+# mask out unnecessary? yes,after left_join identical to ignoring mask 
+# identical(edges_elig_samp_b_2,edges_elig_samp_b)
+# identical(edges_sampled_b,edges_sampled_b_mask)
 
 remap_tree = function(id_boot_desc_b,df_edges_ances_elig){
 	require(dplyr)
 	# df_edges_ances_elig = samp$edges
 	# id_boot_desc_b = id_boot_1[[b]]
-	
-	# edges_elig_samp_b_2 = df_edges_ances_elig %>% 
-	# 	dplyr::filter((node1 %in% id_boot_desc_b) & (node2 %in% id_boot_desc_b))
-	
-	# mask out unnecessary? yes,after left_join identical to ignoring mask 
-	# edges_elig_samp_b = df_edges_ances_elig
-	
-	
-	# edges_elig_samp_b %>% head()
-	# id_boot_1[[b]]
 	
 	# use fact that
 	# node can only have up to 1 parent
@@ -31,16 +26,10 @@ remap_tree = function(id_boot_desc_b,df_edges_ances_elig){
 	# naming sampled nodes as 'node2' + left join = 'searching up/back tree'
 	
 	
-	# edges_sampled_b_mask = left_join(x=data.frame(node2=as.numeric(id_boot_desc_b)),
-	# 														y=edges_elig_samp_b_2)
-	
 	edges_sampled_b = left_join(x=data.frame(node2=as.numeric(id_boot_desc_b)),
 															y=df_edges_ances_elig)
 	
 	# note: node2 is original input
-	
-	# identical(edges_elig_samp_b_2,edges_elig_samp_b)
-	# identical(edges_sampled_b,edges_sampled_b_mask)
 	
 	# str(edges_sampled_b,1)
 	
@@ -50,7 +39,7 @@ remap_tree = function(id_boot_desc_b,df_edges_ances_elig){
 	# cosmeticaly get rid of parent redundant NA for seed
 	# cosmetically get rid of island node with NA edge
 	
-	# parent and island node info preserved in seperate $node attribute
+	# parent and island node info preserved in seperate foo$node attribute
 	# confirm this is behavior of .TBS(samp=list(edges,nodes))
 	
 	edges_sampled_b = edges_sampled_b %>% 
@@ -65,6 +54,7 @@ remap_tree = function(id_boot_desc_b,df_edges_ances_elig){
 	# list with nodes and edges info required by .TBS()
 	id_boot_1_treeinfo = list(nodes=as.numeric(id_boot_desc_b),
 														edges=edges_sampled_b)
+	
 	# str(id_boot_1_treeinfo)
 	
 	return(id_boot_1_treeinfo)
