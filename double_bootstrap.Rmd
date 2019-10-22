@@ -1,6 +1,7 @@
 ---
 title: "Double Bootstrap with Pivot Procedure"
-output: html_notebook
+output: html_notebook;
+        md_document
 ---
 
 ![Diagram](double bootstrap diagram.png)
@@ -10,18 +11,18 @@ $X^*_n=x^*_1,x^*_2,...,x^*_N$, with parameter estimates $\hat\theta^*_n$, where 
 
 ###Original estimate of theta
 $\hat\theta$
-```{r}
+```{r eval=FALSE}
 est_0 = est_samp_orig$est_samp
 ```
 
 ###Regression on single bootstrap samples to get parameter estimates and SE
-```{r}	
+```{r eval=FALSE}	
 quant_boot_lvl_1 = compute_quants_possibly(df_4_estimate = df_orig[ind_b,]) 
 ```
 
 ###First Stage Root 
 $R^*_n= \frac{\hat\theta^*_n- \hat\theta}{se(\hat\theta^*_n)}$
-```{r}
+```{r eval=FALSE}
 root_pivot_0_b = (quant_boot_lvl_1$est_samp-est_0)/quant_boot_lvl_1$se_samp
 ```
 
@@ -30,7 +31,7 @@ root_pivot_0_b = (quant_boot_lvl_1$est_samp-est_0)/quant_boot_lvl_1$se_samp
 $X^{**}_{nm}=x^{**}_11,x^{**}_12,...,x^{**}_{NM}$ with parameter estimates $\hat\theta^{**}_{nm}$, where $n=1,2,...,N$ and $m=1,2,...,M$. 
 	
 ###Regression on double bootstrap samples to get parameter estimates and SE
-```{r}
+```{r eval=FALSE}
 	list_ind_bb_from_b = unlist(list_tib_b_bb[[b]][['ids_bb']],recursive = FALSE)
 	
 	if(any(is.null(list_ind_bb_from_b))==TRUE){
@@ -47,14 +48,14 @@ $X^{**}_{nm}=x^{**}_11,x^{**}_12,...,x^{**}_{NM}$ with parameter estimates $\hat
 
 ###Second Stage Root
 $R^{**}_{nm}= \frac{\hat\theta^{**}_{nm} - \hat\theta^*_n}{se(\hat\theta^{**}_{nm})}$	
-```{r}
+```{r eval=FALSE}
 	 root_pivot_b_bb = (est_b_bb - quant_boot_lvl_1$est_samp)/se_b_bb
 ```			
 
 ##Probability of roots in second boostrap less then or equal to root in first bootstrap
 
 $Z_n=\frac{Number\,of\,(R^{**}_{nm}\le R^{**}_n)}{M}$
-```{r}
+```{r eval=FALSE}
 		 u_b = pivot_b  = z_b
 		u_b = mean(na.omit(root_pivot_b_bb) <= root_pivot_0_b)
 		list_u_all[[b]] = data.frame(u_b=u_b,root_pivot_0_b=root_pivot_0_b)
@@ -64,7 +65,7 @@ $Z_n=\frac{Number\,of\,(R^{**}_{nm}\le R^{**}_n)}{M}$
 ```
 
 $Z_{[g]}$ with $g=1,2,...,N$: ordered values of $Z_n$
-```{r}
+```{r eval=FALSE}
 # arrange() ;+ ordered / sort 
 ref_quants = ref_quants %>% arrange(u_b) %>% na.omit()
 B1_na = nrow(ref_quants)
@@ -73,13 +74,13 @@ B1_na
 ```
 
 $l=N*Z_{[(1-\alpha/2)*N]}$ and $u=N*Z_{[(\alpha/2)*N]}$
-```{r}
+```{r eval=FALSE}
 l_ref = B1_na*quantile(ref_quants$u_b,(1-alpha/2))
 u_ref = B1_na*quantile(ref_quants$u_b,(alpha/2))
 ```
 
 Use $l$ and $u$ as references to look up in $R^*_{[k]}$ with $k=1,2,...,N$, an ordered list of the N values of $R^*_n$
-```{r}
+```{r eval=FALSE}
 l_ref_root = ref_quants$root_pivot_0_b[floor(l_ref)]
 u_ref_root = ref_quants$root_pivot_0_b[ifelse(floor(u_ref)==0,1,floor(u_ref))]
 ```
@@ -87,7 +88,7 @@ u_ref_root = ref_quants$root_pivot_0_b[ifelse(floor(u_ref)==0,1,floor(u_ref))]
 ##100(1-alpha)% Confidence Interval 
 
 $[\hat\theta-R^*_{[l]}*se(\hat\theta), \hat\theta-R^*_{[u]}*se(\hat\theta)]$
-```{r}
+```{r eval=FALSE}
 ##lower and upper bound
 ll_dtbs_pivot = est_samp_orig$est_samp - l_ref_root*est_samp_orig$se_samp
 ul_dtbs_pivot = est_samp_orig$est_samp - u_ref_root*est_samp_orig$se_samp

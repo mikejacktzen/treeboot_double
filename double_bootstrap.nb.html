@@ -238,7 +238,7 @@ summary {
 <p><span class="math inline">\(\hat\theta\)</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXN0XzAgPSBlc3Rfc2FtcF9vcmlnJGVzdF9zYW1wXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiZXN0XzAgPSBlc3Rfc2FtcF9vcmlnJGVzdF9zYW1wIn0= -->
 <pre class="r"><code>est_0 = est_samp_orig$est_samp</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -248,7 +248,7 @@ summary {
 <h3>Regression on single bootstrap samples to get parameter estimates and SE</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucXVhbnRfYm9vdF9sdmxfMSA9IGNvbXB1dGVfcXVhbnRzX3Bvc3NpYmx5KGRmXzRfZXN0aW1hdGUgPSBkZl9vcmlnW2luZF9iLF0pIFxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoicXVhbnRfYm9vdF9sdmxfMSA9IGNvbXB1dGVfcXVhbnRzX3Bvc3NpYmx5KGRmXzRfZXN0aW1hdGUgPSBkZl9vcmlnW2luZF9iLF0pICJ9 -->
 <pre class="r"><code>quant_boot_lvl_1 = compute_quants_possibly(df_4_estimate = df_orig[ind_b,]) </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -259,7 +259,7 @@ summary {
 <p><span class="math inline">\(R^*_n= \frac{\hat\theta^*_n- \hat\theta}{se(\hat\theta^*_n)}\)</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm9vdF9waXZvdF8wX2IgPSAocXVhbnRfYm9vdF9sdmxfMSRlc3Rfc2FtcC1lc3RfMCkvcXVhbnRfYm9vdF9sdmxfMSRzZV9zYW1wXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoicm9vdF9waXZvdF8wX2IgPSAocXVhbnRfYm9vdF9sdmxfMSRlc3Rfc2FtcC1lc3RfMCkvcXVhbnRfYm9vdF9sdmxfMSRzZV9zYW1wIn0= -->
 <pre class="r"><code>root_pivot_0_b = (quant_boot_lvl_1$est_samp-est_0)/quant_boot_lvl_1$se_samp</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -273,7 +273,7 @@ summary {
 <h3>Regression on double bootstrap samples to get parameter estimates and SE</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXHRsaXN0X2luZF9iYl9mcm9tX2IgPSB1bmxpc3QobGlzdF90aWJfYl9iYltbYl1dW1snaWRzX2JiJ11dLHJlY3Vyc2l2ZSA9IEZBTFNFKVxuXHRcblx0aWYoYW55KGlzLm51bGwobGlzdF9pbmRfYmJfZnJvbV9iKSk9PVRSVUUpe1xuXHRcdHVfYj1OQVxuXHR9ZWxzZXtcblx0cXVhbnRfYm9vdF9sdmxfMiA9IGxhcHBseShsaXN0X2luZF9iYl9mcm9tX2IsRlVOPWZ1bmN0aW9uKHh4KXtcbiAgICAgICAgICAgICAgICAgIFx0Y29tcHV0ZV9xdWFudHNfcG9zc2libHkoZGZfNF9lc3RpbWF0ZSA9ZGZfb3JpZ1t1bmxpc3QoeHgpLF0pXG5cdFx0XHRcdFx0XHRcdFx0XHRcdFx0XHRcdFx0fSlcblx0fVxuXHRcdFxuXHRcdGVzdF9iX2JiID0gZGF0YS5mcmFtZShkby5jYWxsKHJiaW5kLHF1YW50X2Jvb3RfbHZsXzIpKVssJ2VzdF9zYW1wJ11cblx0XHRzZV9iX2JiID0gZGF0YS5mcmFtZShkby5jYWxsKHJiaW5kLHF1YW50X2Jvb3RfbHZsXzIpKVssJ3NlX3NhbXAnXVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjpbIlx0bGlzdF9pbmRfYmJfZnJvbV9iID0gdW5saXN0KGxpc3RfdGliX2JfYmJbW2JdXVtbJ2lkc19iYiddXSxyZWN1cnNpdmUgPSBGQUxTRSkiLCJcdCIsIlx0aWYoYW55KGlzLm51bGwobGlzdF9pbmRfYmJfZnJvbV9iKSk9PVRSVUUpeyIsIlx0XHR1X2I9TkEiLCJcdH1lbHNleyIsIlx0cXVhbnRfYm9vdF9sdmxfMiA9IGxhcHBseShsaXN0X2luZF9iYl9mcm9tX2IsRlVOPWZ1bmN0aW9uKHh4KXsiLCIgICAgICAgICAgICAgICAgICBcdGNvbXB1dGVfcXVhbnRzX3Bvc3NpYmx5KGRmXzRfZXN0aW1hdGUgPWRmX29yaWdbdW5saXN0KHh4KSxdKSIsIlx0XHRcdFx0XHRcdFx0XHRcdFx0XHRcdFx0XHR9KSIsIlx0fSIsIlx0XHQiLCJcdFx0ZXN0X2JfYmIgPSBkYXRhLmZyYW1lKGRvLmNhbGwocmJpbmQscXVhbnRfYm9vdF9sdmxfMikpWywnZXN0X3NhbXAnXSIsIlx0XHRzZV9iX2JiID0gZGF0YS5mcmFtZShkby5jYWxsKHJiaW5kLHF1YW50X2Jvb3RfbHZsXzIpKVssJ3NlX3NhbXAnXSJdfQ== -->
 <pre class="r"><code>    list_ind_bb_from_b = unlist(list_tib_b_bb[[b]][['ids_bb']],recursive = FALSE)
     
     if(any(is.null(list_ind_bb_from_b))==TRUE){
@@ -295,7 +295,7 @@ summary {
 <p><span class="math inline">\(R^{**}_{nm}= \frac{\hat\theta^{**}_{nm} - \hat\theta^*_n}{se(\hat\theta^{**}_{nm})}\)</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXHQgcm9vdF9waXZvdF9iX2JiID0gKGVzdF9iX2JiIC0gcXVhbnRfYm9vdF9sdmxfMSRlc3Rfc2FtcCkvc2VfYl9iYlxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiXHQgcm9vdF9waXZvdF9iX2JiID0gKGVzdF9iX2JiIC0gcXVhbnRfYm9vdF9sdmxfMSRlc3Rfc2FtcCkvc2VfYl9iYiJ9 -->
 <pre class="r"><code>     root_pivot_b_bb = (est_b_bb - quant_boot_lvl_1$est_samp)/se_b_bb</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -307,7 +307,7 @@ summary {
 <p><span class="math inline">\(Z_n=\frac{Number\,of\,(R^{**}_{nm}\le R^{**}_n)}{M}\)</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXHRcdCB1X2IgPSBwaXZvdF9iICA9IHpfYlxuXHRcdHVfYiA9IG1lYW4obmEub21pdChyb290X3Bpdm90X2JfYmIpIDw9IHJvb3RfcGl2b3RfMF9iKVxuXHRcdGxpc3RfdV9hbGxbW2JdXSA9IGRhdGEuZnJhbWUodV9iPXVfYixyb290X3Bpdm90XzBfYj1yb290X3Bpdm90XzBfYilcblx0XG5cdCMjQWZ0ZXIgdGhlIGZvciBsb29wLCB3ZSB3aWxsIGdldCBhIHRhYmxlIHdpdGggY29sdW1ucyBaX24gYW5kIFJeKl9uXG5cdHJlZl9xdWFudHMgPSBkby5jYWxsKHJiaW5kLGxpc3RfdV9hbGwpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjpbIlx0XHQgdV9iID0gcGl2b3RfYiAgPSB6X2IiLCJcdFx0dV9iID0gbWVhbihuYS5vbWl0KHJvb3RfcGl2b3RfYl9iYikgPD0gcm9vdF9waXZvdF8wX2IpIiwiXHRcdGxpc3RfdV9hbGxbW2JdXSA9IGRhdGEuZnJhbWUodV9iPXVfYixyb290X3Bpdm90XzBfYj1yb290X3Bpdm90XzBfYikiLCJcdCIsIlx0IyNBZnRlciB0aGUgZm9yIGxvb3AsIHdlIHdpbGwgZ2V0IGEgdGFibGUgd2l0aCBjb2x1bW5zIFpfbiBhbmQgUl4qX24iLCJcdHJlZl9xdWFudHMgPSBkby5jYWxsKHJiaW5kLGxpc3RfdV9hbGwpIl19 -->
 <pre class="r"><code>         u_b = pivot_b  = z_b
         u_b = mean(na.omit(root_pivot_b_bb) &lt;= root_pivot_0_b)
         list_u_all[[b]] = data.frame(u_b=u_b,root_pivot_0_b=root_pivot_0_b)
@@ -320,19 +320,18 @@ summary {
 <p><span class="math inline">\(Z_{[g]}\)</span> with <span class="math inline">\(g=1,2,...,N\)</span>: ordered values of <span class="math inline">\(Z_n\)</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBhcnJhbmdlKCkgOysgb3JkZXJlZCAvIHNvcnQgXG5yZWZfcXVhbnRzID0gcmVmX3F1YW50cyAlPiUgYXJyYW5nZSh1X2IpICU+JSBuYS5vbWl0KClcbkIxX25hID0gbnJvdyhyZWZfcXVhbnRzKVxuQjFfbmFcblxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjpbIiMgYXJyYW5nZSgpIDsrIG9yZGVyZWQgLyBzb3J0ICIsInJlZl9xdWFudHMgPSByZWZfcXVhbnRzICU+JSBhcnJhbmdlKHVfYikgJT4lIG5hLm9taXQoKSIsIkIxX25hID0gbnJvdyhyZWZfcXVhbnRzKSIsIkIxX25hIl19 -->
 <pre class="r"><code># arrange() ;+ ordered / sort 
 ref_quants = ref_quants %&gt;% arrange(u_b) %&gt;% na.omit()
 B1_na = nrow(ref_quants)
-B1_na
-</code></pre>
+B1_na</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p><span class="math inline">\(l=N*Z_{[(1-\alpha/2)*N]}\)</span> and <span class="math inline">\(u=N*Z_{[(\alpha/2)*N]}\)</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubF9yZWYgPSBCMV9uYSpxdWFudGlsZShyZWZfcXVhbnRzJHVfYiwoMS1hbHBoYS8yKSlcbnVfcmVmID0gQjFfbmEqcXVhbnRpbGUocmVmX3F1YW50cyR1X2IsKGFscGhhLzIpKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjpbImxfcmVmID0gQjFfbmEqcXVhbnRpbGUocmVmX3F1YW50cyR1X2IsKDEtYWxwaGEvMikpIiwidV9yZWYgPSBCMV9uYSpxdWFudGlsZShyZWZfcXVhbnRzJHVfYiwoYWxwaGEvMikpIl19 -->
 <pre class="r"><code>l_ref = B1_na*quantile(ref_quants$u_b,(1-alpha/2))
 u_ref = B1_na*quantile(ref_quants$u_b,(alpha/2))</code></pre>
 <!-- rnb-source-end -->
@@ -341,7 +340,7 @@ u_ref = B1_na*quantile(ref_quants$u_b,(alpha/2))</code></pre>
 <p>Use <span class="math inline">\(l\)</span> and <span class="math inline">\(u\)</span> as references to look up in <span class="math inline">\(R^*_{[k]}\)</span> with <span class="math inline">\(k=1,2,...,N\)</span>, an ordered list of the N values of <span class="math inline">\(R^*_n\)</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubF9yZWZfcm9vdCA9IHJlZl9xdWFudHMkcm9vdF9waXZvdF8wX2JbZmxvb3IobF9yZWYpXVxudV9yZWZfcm9vdCA9IHJlZl9xdWFudHMkcm9vdF9waXZvdF8wX2JbaWZlbHNlKGZsb29yKHVfcmVmKT09MCwxLGZsb29yKHVfcmVmKSldXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjpbImxfcmVmX3Jvb3QgPSByZWZfcXVhbnRzJHJvb3RfcGl2b3RfMF9iW2Zsb29yKGxfcmVmKV0iLCJ1X3JlZl9yb290ID0gcmVmX3F1YW50cyRyb290X3Bpdm90XzBfYltpZmVsc2UoZmxvb3IodV9yZWYpPT0wLDEsZmxvb3IodV9yZWYpKV0iXX0= -->
 <pre class="r"><code>l_ref_root = ref_quants$root_pivot_0_b[floor(l_ref)]
 u_ref_root = ref_quants$root_pivot_0_b[ifelse(floor(u_ref)==0,1,floor(u_ref))]</code></pre>
 <!-- rnb-source-end -->
@@ -353,16 +352,15 @@ u_ref_root = ref_quants$root_pivot_0_b[ifelse(floor(u_ref)==0,1,floor(u_ref))]</
 <p><span class="math inline">\([\hat\theta-R^*_{[l]}*se(\hat\theta), \hat\theta-R^*_{[u]}*se(\hat\theta)]\)</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyNsb3dlciBhbmQgdXBwZXIgYm91bmRcbmxsX2R0YnNfcGl2b3QgPSBlc3Rfc2FtcF9vcmlnJGVzdF9zYW1wIC0gbF9yZWZfcm9vdCplc3Rfc2FtcF9vcmlnJHNlX3NhbXBcbnVsX2R0YnNfcGl2b3QgPSBlc3Rfc2FtcF9vcmlnJGVzdF9zYW1wIC0gdV9yZWZfcm9vdCplc3Rfc2FtcF9vcmlnJHNlX3NhbXBcblxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjpbIiMjbG93ZXIgYW5kIHVwcGVyIGJvdW5kIiwibGxfZHRic19waXZvdCA9IGVzdF9zYW1wX29yaWckZXN0X3NhbXAgLSBsX3JlZl9yb290KmVzdF9zYW1wX29yaWckc2Vfc2FtcCIsInVsX2R0YnNfcGl2b3QgPSBlc3Rfc2FtcF9vcmlnJGVzdF9zYW1wIC0gdV9yZWZfcm9vdCplc3Rfc2FtcF9vcmlnJHNlX3NhbXAiXX0= -->
 <pre class="r"><code>##lower and upper bound
 ll_dtbs_pivot = est_samp_orig$est_samp - l_ref_root*est_samp_orig$se_samp
-ul_dtbs_pivot = est_samp_orig$est_samp - u_ref_root*est_samp_orig$se_samp
-</code></pre>
+ul_dtbs_pivot = est_samp_orig$est_samp - u_ref_root*est_samp_orig$se_samp</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRvdWJsZSBCb290c3RyYXAgd2l0aCBQaXZvdCBQcm9jZWR1cmUiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQohW0RpYWdyYW1dKGRvdWJsZSBib290c3RyYXAgZGlhZ3JhbS5wbmcpDQoNCiMjU2luZ2xlIEJvb3RzdHJhcCANCiRYXipfbj14XipfMSx4XipfMiwuLi4seF4qX04kLCB3aXRoIHBhcmFtZXRlciBlc3RpbWF0ZXMgJFxoYXRcdGhldGFeKl9uJCwgd2hlcmUgJG49MSwyLC4uLixOJCAuDQoNCiMjI09yaWdpbmFsIGVzdGltYXRlIG9mIHRoZXRhDQokXGhhdFx0aGV0YSQNCmBgYHtyfQ0KZXN0XzAgPSBlc3Rfc2FtcF9vcmlnJGVzdF9zYW1wDQpgYGANCg0KIyMjUmVncmVzc2lvbiBvbiBzaW5nbGUgYm9vdHN0cmFwIHNhbXBsZXMgdG8gZ2V0IHBhcmFtZXRlciBlc3RpbWF0ZXMgYW5kIFNFDQpgYGB7cn0JDQpxdWFudF9ib290X2x2bF8xID0gY29tcHV0ZV9xdWFudHNfcG9zc2libHkoZGZfNF9lc3RpbWF0ZSA9IGRmX29yaWdbaW5kX2IsXSkgDQpgYGANCg0KIyMjRmlyc3QgU3RhZ2UgUm9vdCANCiRSXipfbj0gXGZyYWN7XGhhdFx0aGV0YV4qX24tIFxoYXRcdGhldGF9e3NlKFxoYXRcdGhldGFeKl9uKX0kDQpgYGB7cn0NCnJvb3RfcGl2b3RfMF9iID0gKHF1YW50X2Jvb3RfbHZsXzEkZXN0X3NhbXAtZXN0XzApL3F1YW50X2Jvb3RfbHZsXzEkc2Vfc2FtcA0KYGBgDQoNCiMjRG91YmxlIEJvb3RzdHJhcCANCg0KJFheeyoqfV97bm19PXheeyoqfV8xMSx4XnsqKn1fMTIsLi4uLHheeyoqfV97Tk19JCB3aXRoIHBhcmFtZXRlciBlc3RpbWF0ZXMgJFxoYXRcdGhldGFeeyoqfV97bm19JCwgd2hlcmUgJG49MSwyLC4uLixOJCBhbmQgJG09MSwyLC4uLixNJC4gDQoJDQojIyNSZWdyZXNzaW9uIG9uIGRvdWJsZSBib290c3RyYXAgc2FtcGxlcyB0byBnZXQgcGFyYW1ldGVyIGVzdGltYXRlcyBhbmQgU0UNCmBgYHtyfQ0KCWxpc3RfaW5kX2JiX2Zyb21fYiA9IHVubGlzdChsaXN0X3RpYl9iX2JiW1tiXV1bWydpZHNfYmInXV0scmVjdXJzaXZlID0gRkFMU0UpDQoJDQoJaWYoYW55KGlzLm51bGwobGlzdF9pbmRfYmJfZnJvbV9iKSk9PVRSVUUpew0KCQl1X2I9TkENCgl9ZWxzZXsNCglxdWFudF9ib290X2x2bF8yID0gbGFwcGx5KGxpc3RfaW5kX2JiX2Zyb21fYixGVU49ZnVuY3Rpb24oeHgpew0KICAgICAgICAgICAgICAgICAgCWNvbXB1dGVfcXVhbnRzX3Bvc3NpYmx5KGRmXzRfZXN0aW1hdGUgPWRmX29yaWdbdW5saXN0KHh4KSxdKQ0KCQkJCQkJCQkJCQkJCQl9KQ0KCX0NCgkJDQoJCWVzdF9iX2JiID0gZGF0YS5mcmFtZShkby5jYWxsKHJiaW5kLHF1YW50X2Jvb3RfbHZsXzIpKVssJ2VzdF9zYW1wJ10NCgkJc2VfYl9iYiA9IGRhdGEuZnJhbWUoZG8uY2FsbChyYmluZCxxdWFudF9ib290X2x2bF8yKSlbLCdzZV9zYW1wJ10NCmBgYA0KDQojIyNTZWNvbmQgU3RhZ2UgUm9vdA0KJFJeeyoqfV97bm19PSBcZnJhY3tcaGF0XHRoZXRhXnsqKn1fe25tfSAtIFxoYXRcdGhldGFeKl9ufXtzZShcaGF0XHRoZXRhXnsqKn1fe25tfSl9JAkNCmBgYHtyfQ0KCSByb290X3Bpdm90X2JfYmIgPSAoZXN0X2JfYmIgLSBxdWFudF9ib290X2x2bF8xJGVzdF9zYW1wKS9zZV9iX2JiDQpgYGAJCQkNCg0KIyNQcm9iYWJpbGl0eSBvZiByb290cyBpbiBzZWNvbmQgYm9vc3RyYXAgbGVzcyB0aGVuIG9yIGVxdWFsIHRvIHJvb3QgaW4gZmlyc3QgYm9vdHN0cmFwDQoNCiRaX249XGZyYWN7TnVtYmVyXCxvZlwsKFJeeyoqfV97bm19XGxlIFJeeyoqfV9uKX17TX0kDQpgYGB7cn0NCgkJIHVfYiA9IHBpdm90X2IgID0gel9iDQoJCXVfYiA9IG1lYW4obmEub21pdChyb290X3Bpdm90X2JfYmIpIDw9IHJvb3RfcGl2b3RfMF9iKQ0KCQlsaXN0X3VfYWxsW1tiXV0gPSBkYXRhLmZyYW1lKHVfYj11X2Iscm9vdF9waXZvdF8wX2I9cm9vdF9waXZvdF8wX2IpDQoJDQoJIyNBZnRlciB0aGUgZm9yIGxvb3AsIHdlIHdpbGwgZ2V0IGEgdGFibGUgd2l0aCBjb2x1bW5zIFpfbiBhbmQgUl4qX24NCglyZWZfcXVhbnRzID0gZG8uY2FsbChyYmluZCxsaXN0X3VfYWxsKQ0KYGBgDQoNCiRaX3tbZ119JCB3aXRoICRnPTEsMiwuLi4sTiQ6IG9yZGVyZWQgdmFsdWVzIG9mICRaX24kDQpgYGB7cn0NCiMgYXJyYW5nZSgpIDsrIG9yZGVyZWQgLyBzb3J0IA0KcmVmX3F1YW50cyA9IHJlZl9xdWFudHMgJT4lIGFycmFuZ2UodV9iKSAlPiUgbmEub21pdCgpDQpCMV9uYSA9IG5yb3cocmVmX3F1YW50cykNCkIxX25hDQoNCmBgYA0KDQokbD1OKlpfe1soMS1cYWxwaGEvMikqTl19JCBhbmQgJHU9TipaX3tbKFxhbHBoYS8yKSpOXX0kDQpgYGB7cn0NCmxfcmVmID0gQjFfbmEqcXVhbnRpbGUocmVmX3F1YW50cyR1X2IsKDEtYWxwaGEvMikpDQp1X3JlZiA9IEIxX25hKnF1YW50aWxlKHJlZl9xdWFudHMkdV9iLChhbHBoYS8yKSkNCmBgYA0KDQpVc2UgJGwkIGFuZCAkdSQgYXMgcmVmZXJlbmNlcyB0byBsb29rIHVwIGluICRSXipfe1trXX0kIHdpdGggJGs9MSwyLC4uLixOJCwgYW4gb3JkZXJlZCBsaXN0IG9mIHRoZSBOIHZhbHVlcyBvZiAkUl4qX24kDQpgYGB7cn0NCmxfcmVmX3Jvb3QgPSByZWZfcXVhbnRzJHJvb3RfcGl2b3RfMF9iW2Zsb29yKGxfcmVmKV0NCnVfcmVmX3Jvb3QgPSByZWZfcXVhbnRzJHJvb3RfcGl2b3RfMF9iW2lmZWxzZShmbG9vcih1X3JlZik9PTAsMSxmbG9vcih1X3JlZikpXQ0KYGBgDQoNCiMjMTAwKDEtYWxwaGEpJSBDb25maWRlbmNlIEludGVydmFsIA0KDQokW1xoYXRcdGhldGEtUl4qX3tbbF19KnNlKFxoYXRcdGhldGEpLCBcaGF0XHRoZXRhLVJeKl97W3VdfSpzZShcaGF0XHRoZXRhKV0kDQpgYGB7cn0NCiMjbG93ZXIgYW5kIHVwcGVyIGJvdW5kDQpsbF9kdGJzX3Bpdm90ID0gZXN0X3NhbXBfb3JpZyRlc3Rfc2FtcCAtIGxfcmVmX3Jvb3QqZXN0X3NhbXBfb3JpZyRzZV9zYW1wDQp1bF9kdGJzX3Bpdm90ID0gZXN0X3NhbXBfb3JpZyRlc3Rfc2FtcCAtIHVfcmVmX3Jvb3QqZXN0X3NhbXBfb3JpZyRzZV9zYW1wDQoNCmBgYA0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRvdWJsZSBCb290c3RyYXAgd2l0aCBQaXZvdCBQcm9jZWR1cmUiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2s7DQogICAgICAgIG1kX2RvY3VtZW50DQotLS0NCg0KIVtEaWFncmFtXShkb3VibGUgYm9vdHN0cmFwIGRpYWdyYW0ucG5nKQ0KDQojI1NpbmdsZSBCb290c3RyYXAgDQokWF4qX249eF4qXzEseF4qXzIsLi4uLHheKl9OJCwgd2l0aCBwYXJhbWV0ZXIgZXN0aW1hdGVzICRcaGF0XHRoZXRhXipfbiQsIHdoZXJlICRuPTEsMiwuLi4sTiQgLg0KDQojIyNPcmlnaW5hbCBlc3RpbWF0ZSBvZiB0aGV0YQ0KJFxoYXRcdGhldGEkDQpgYGB7ciBldmFsPUZBTFNFfQ0KZXN0XzAgPSBlc3Rfc2FtcF9vcmlnJGVzdF9zYW1wDQpgYGANCg0KIyMjUmVncmVzc2lvbiBvbiBzaW5nbGUgYm9vdHN0cmFwIHNhbXBsZXMgdG8gZ2V0IHBhcmFtZXRlciBlc3RpbWF0ZXMgYW5kIFNFDQpgYGB7ciBldmFsPUZBTFNFfQkNCnF1YW50X2Jvb3RfbHZsXzEgPSBjb21wdXRlX3F1YW50c19wb3NzaWJseShkZl80X2VzdGltYXRlID0gZGZfb3JpZ1tpbmRfYixdKSANCmBgYA0KDQojIyNGaXJzdCBTdGFnZSBSb290IA0KJFJeKl9uPSBcZnJhY3tcaGF0XHRoZXRhXipfbi0gXGhhdFx0aGV0YX17c2UoXGhhdFx0aGV0YV4qX24pfSQNCmBgYHtyIGV2YWw9RkFMU0V9DQpyb290X3Bpdm90XzBfYiA9IChxdWFudF9ib290X2x2bF8xJGVzdF9zYW1wLWVzdF8wKS9xdWFudF9ib290X2x2bF8xJHNlX3NhbXANCmBgYA0KDQojI0RvdWJsZSBCb290c3RyYXAgDQoNCiRYXnsqKn1fe25tfT14XnsqKn1fMTEseF57Kip9XzEyLC4uLix4XnsqKn1fe05NfSQgd2l0aCBwYXJhbWV0ZXIgZXN0aW1hdGVzICRcaGF0XHRoZXRhXnsqKn1fe25tfSQsIHdoZXJlICRuPTEsMiwuLi4sTiQgYW5kICRtPTEsMiwuLi4sTSQuIA0KCQ0KIyMjUmVncmVzc2lvbiBvbiBkb3VibGUgYm9vdHN0cmFwIHNhbXBsZXMgdG8gZ2V0IHBhcmFtZXRlciBlc3RpbWF0ZXMgYW5kIFNFDQpgYGB7ciBldmFsPUZBTFNFfQ0KCWxpc3RfaW5kX2JiX2Zyb21fYiA9IHVubGlzdChsaXN0X3RpYl9iX2JiW1tiXV1bWydpZHNfYmInXV0scmVjdXJzaXZlID0gRkFMU0UpDQoJDQoJaWYoYW55KGlzLm51bGwobGlzdF9pbmRfYmJfZnJvbV9iKSk9PVRSVUUpew0KCQl1X2I9TkENCgl9ZWxzZXsNCglxdWFudF9ib290X2x2bF8yID0gbGFwcGx5KGxpc3RfaW5kX2JiX2Zyb21fYixGVU49ZnVuY3Rpb24oeHgpew0KICAgICAgICAgICAgICAgICAgCWNvbXB1dGVfcXVhbnRzX3Bvc3NpYmx5KGRmXzRfZXN0aW1hdGUgPWRmX29yaWdbdW5saXN0KHh4KSxdKQ0KCQkJCQkJCQkJCQkJCQl9KQ0KCX0NCgkJDQoJCWVzdF9iX2JiID0gZGF0YS5mcmFtZShkby5jYWxsKHJiaW5kLHF1YW50X2Jvb3RfbHZsXzIpKVssJ2VzdF9zYW1wJ10NCgkJc2VfYl9iYiA9IGRhdGEuZnJhbWUoZG8uY2FsbChyYmluZCxxdWFudF9ib290X2x2bF8yKSlbLCdzZV9zYW1wJ10NCmBgYA0KDQojIyNTZWNvbmQgU3RhZ2UgUm9vdA0KJFJeeyoqfV97bm19PSBcZnJhY3tcaGF0XHRoZXRhXnsqKn1fe25tfSAtIFxoYXRcdGhldGFeKl9ufXtzZShcaGF0XHRoZXRhXnsqKn1fe25tfSl9JAkNCmBgYHtyIGV2YWw9RkFMU0V9DQoJIHJvb3RfcGl2b3RfYl9iYiA9IChlc3RfYl9iYiAtIHF1YW50X2Jvb3RfbHZsXzEkZXN0X3NhbXApL3NlX2JfYmINCmBgYAkJCQ0KDQojI1Byb2JhYmlsaXR5IG9mIHJvb3RzIGluIHNlY29uZCBib29zdHJhcCBsZXNzIHRoZW4gb3IgZXF1YWwgdG8gcm9vdCBpbiBmaXJzdCBib290c3RyYXANCg0KJFpfbj1cZnJhY3tOdW1iZXJcLG9mXCwoUl57Kip9X3tubX1cbGUgUl57Kip9X24pfXtNfSQNCmBgYHtyIGV2YWw9RkFMU0V9DQoJCSB1X2IgPSBwaXZvdF9iICA9IHpfYg0KCQl1X2IgPSBtZWFuKG5hLm9taXQocm9vdF9waXZvdF9iX2JiKSA8PSByb290X3Bpdm90XzBfYikNCgkJbGlzdF91X2FsbFtbYl1dID0gZGF0YS5mcmFtZSh1X2I9dV9iLHJvb3RfcGl2b3RfMF9iPXJvb3RfcGl2b3RfMF9iKQ0KCQ0KCSMjQWZ0ZXIgdGhlIGZvciBsb29wLCB3ZSB3aWxsIGdldCBhIHRhYmxlIHdpdGggY29sdW1ucyBaX24gYW5kIFJeKl9uDQoJcmVmX3F1YW50cyA9IGRvLmNhbGwocmJpbmQsbGlzdF91X2FsbCkNCmBgYA0KDQokWl97W2ddfSQgd2l0aCAkZz0xLDIsLi4uLE4kOiBvcmRlcmVkIHZhbHVlcyBvZiAkWl9uJA0KYGBge3IgZXZhbD1GQUxTRX0NCiMgYXJyYW5nZSgpIDsrIG9yZGVyZWQgLyBzb3J0IA0KcmVmX3F1YW50cyA9IHJlZl9xdWFudHMgJT4lIGFycmFuZ2UodV9iKSAlPiUgbmEub21pdCgpDQpCMV9uYSA9IG5yb3cocmVmX3F1YW50cykNCkIxX25hDQoNCmBgYA0KDQokbD1OKlpfe1soMS1cYWxwaGEvMikqTl19JCBhbmQgJHU9TipaX3tbKFxhbHBoYS8yKSpOXX0kDQpgYGB7ciBldmFsPUZBTFNFfQ0KbF9yZWYgPSBCMV9uYSpxdWFudGlsZShyZWZfcXVhbnRzJHVfYiwoMS1hbHBoYS8yKSkNCnVfcmVmID0gQjFfbmEqcXVhbnRpbGUocmVmX3F1YW50cyR1X2IsKGFscGhhLzIpKQ0KYGBgDQoNClVzZSAkbCQgYW5kICR1JCBhcyByZWZlcmVuY2VzIHRvIGxvb2sgdXAgaW4gJFJeKl97W2tdfSQgd2l0aCAkaz0xLDIsLi4uLE4kLCBhbiBvcmRlcmVkIGxpc3Qgb2YgdGhlIE4gdmFsdWVzIG9mICRSXipfbiQNCmBgYHtyIGV2YWw9RkFMU0V9DQpsX3JlZl9yb290ID0gcmVmX3F1YW50cyRyb290X3Bpdm90XzBfYltmbG9vcihsX3JlZildDQp1X3JlZl9yb290ID0gcmVmX3F1YW50cyRyb290X3Bpdm90XzBfYltpZmVsc2UoZmxvb3IodV9yZWYpPT0wLDEsZmxvb3IodV9yZWYpKV0NCmBgYA0KDQojIzEwMCgxLWFscGhhKSUgQ29uZmlkZW5jZSBJbnRlcnZhbCANCg0KJFtcaGF0XHRoZXRhLVJeKl97W2xdfSpzZShcaGF0XHRoZXRhKSwgXGhhdFx0aGV0YS1SXipfe1t1XX0qc2UoXGhhdFx0aGV0YSldJA0KYGBge3IgZXZhbD1GQUxTRX0NCiMjbG93ZXIgYW5kIHVwcGVyIGJvdW5kDQpsbF9kdGJzX3Bpdm90ID0gZXN0X3NhbXBfb3JpZyRlc3Rfc2FtcCAtIGxfcmVmX3Jvb3QqZXN0X3NhbXBfb3JpZyRzZV9zYW1wDQp1bF9kdGJzX3Bpdm90ID0gZXN0X3NhbXBfb3JpZyRlc3Rfc2FtcCAtIHVfcmVmX3Jvb3QqZXN0X3NhbXBfb3JpZyRzZV9zYW1wDQoNCmBgYA0K</div>
 
 
 
