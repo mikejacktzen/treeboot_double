@@ -37,7 +37,7 @@ for(b in seq_along(id_boot_1)){
 	
 	tab_b_bb = tibble::tibble(ids_b=list(id_boot_1[[b]]),
 														ids_bb=list(id_dubboot_from_b1))
-	list_tib[[b]] = tab_b_bb
+	list_tib[[b]] = tab_b_bb ##id for first bootstrap and second bootstrap
 }
 
 str(list_tib,2)
@@ -48,9 +48,9 @@ source('scripts/c_estimates_after_dubboot.R')
 compute_quants_possibly = purrr::possibly(compute_quants,NA)
 
 df_orig = samp$traits
-est_samp_orig = compute_quants(df_orig)
+est_samp_orig = compute_quants(df_orig) ## \hat\theta
 
-list_tib_b_bb = list_tib
+list_tib_b_bb = list_tib ##1st bootstrap and 2nd bootstrap
 
 str(list_tib_b_bb,2)
 View(list_tib_b_bb[[1]])
