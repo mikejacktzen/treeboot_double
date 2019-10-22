@@ -4,7 +4,7 @@ Single Bootstrap
 ----------------
 
 *X*<sub>*n*</sub><sup>\*</sup> = *x*<sub>1</sub><sup>\*</sup>, *x*<sub>2</sub><sup>\*</sup>, ..., *x*<sub>*N*</sub><sup>\*</sup>,
-with parameter estimates $\\hat\\theta^\*\_n$, where
+with parameter estimates $\\hat{\\theta^\*\_n}$, where
 *n* = 1, 2, ..., *N* .
 
 ### Original estimate of theta
@@ -19,7 +19,7 @@ $\\hat\\theta$
 
 ### First Stage Root
 
-$R^\*\_n= \\frac{\\hat\\theta^\*\_n- \\hat\\theta}{se(\\hat\\theta^\*\_n)}$
+$R^\*\_n= \\frac{\\hat{\\theta^\*\_n}- \\hat{\\theta}}{se(\\hat{\\theta^\*\_n})}$
 
     root_pivot_0_b = (quant_boot_lvl_1$est_samp-est_0)/quant_boot_lvl_1$se_samp
 
@@ -27,7 +27,7 @@ Double Bootstrap
 ----------------
 
 *X*<sub>*n**m*</sub><sup>\*\*</sup> = *x*<sub>11</sub><sup>\*\*</sup>, *x*<sub>12</sub><sup>\*\*</sup>, ..., *x*<sub>*N**M*</sub><sup>\*\*</sup>
-with parameter estimates $\\hat\\theta^{\*\*}\_{nm}$, where
+with parameter estimates $\\hat{\\theta^{\*\*}\_{nm}}$, where
 *n* = 1, 2, ..., *N* and *m* = 1, 2, ..., *M*.
 
 ### Regression on double bootstrap samples to get parameter estimates and SE
@@ -47,7 +47,7 @@ with parameter estimates $\\hat\\theta^{\*\*}\_{nm}$, where
 
 ### Second Stage Root
 
-$R^{\*\*}\_{nm}= \\frac{\\hat\\theta^{\*\*}\_{nm} - \\hat\\theta^\*\_n}{se(\\hat\\theta^{\*\*}\_{nm})}$
+$R^{\*\*}\_{nm}= \\frac{\\hat{\\theta^{\*\*}\_{nm}} - \\hat{\\theta^\*\_n}}{se(\\hat{\\theta^{\*\*}\_{nm}})}$
 
          root_pivot_b_bb = (est_b_bb - quant_boot_lvl_1$est_samp)/se_b_bb
 
@@ -87,7 +87,7 @@ list of the N values of *R*<sub>*n*</sub><sup>\*</sup>
 100(1-alpha)% Confidence Interval
 ---------------------------------
 
-$\[\\hat\\theta-R^\*\_{\[l\]}\*se(\\hat\\theta), \\hat\\theta-R^\*\_{\[u\]}\*se(\\hat\\theta)\]$
+$\[\\hat{\\theta}-R^\*\_{\[l\]}\*se(\\hat{\\theta}), \\hat{\\theta}-R^\*\_{\[u\]}\*se(\\hat{\\theta})\]$
 
     ##lower and upper bound
     ll_dtbs_pivot = est_samp_orig$est_samp - l_ref_root*est_samp_orig$se_samp
