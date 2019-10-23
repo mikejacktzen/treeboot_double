@@ -14,6 +14,19 @@
 # identical(edges_sampled_b,edges_sampled_b_mask)
 
 remap_tree = function(id_boot_desc_b,df_edges_ances_elig){
+	
+	## only throw this warning if working with original id
+	## but original id method is more book keeping
+	# 
+	# if(identical(sort(id_boot_desc_b),seq_along(id_boot_desc_b))==TRUE){
+	# 	warning(cat('make sure the "id_boot_desc_b" argument is a vector of "original" ids,
+	# 					since .TBS() outputs ordered ids (it internally requires ordered ids).
+	# 					Goal is to lookup / attach original edges of "df_edges_ances_elig",
+	# 					which requires "id_boot_desc_b" to be original id labels'))
+	# }
+
+
+	
 	require(dplyr)
 	# df_edges_ances_elig = samp$edges
 	# id_boot_desc_b = id_boot_1[[b]]
@@ -25,10 +38,12 @@ remap_tree = function(id_boot_desc_b,df_edges_ances_elig){
 	# for sampled nodes, attach eligible 'original data' edges
 	# naming sampled nodes as 'node2' + left join = 'searching up/back tree'
 	
+	edges_sampled_b = suppressMessages(left_join(x=data.frame(node2=as.numeric(id_boot_desc_b)),
+														 y=df_edges_ances_elig))
 	
-	edges_sampled_b = left_join(x=data.frame(node2=as.numeric(id_boot_desc_b)),
-															y=df_edges_ances_elig)
-	
+	# edges_sampled_b = left_join(x=data.frame(node2=as.numeric(id_boot_desc_b)),
+	# 														y=df_edges_ances_elig)
+	# 
 	# note: node2 is original input
 	
 	# str(edges_sampled_b,1)

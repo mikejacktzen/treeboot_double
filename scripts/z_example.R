@@ -45,16 +45,31 @@ source('scripts/a_remap_tree_func.R')
 
 
 # step 0, have user pre map ordered ids
+# two arguments user needs at step 0
+# tree_info_samp_orig
+# df_orig
 
-# level 1
+tree_info_samp_orig
+df_orig
+
+
+
 # creating this key needs population of all nodes uniqued
-
 df_key_id_orig_w_sort = data.frame(id_orig=sort(tree_info_samp_orig$nodes),
 																	 id_ord=seq_along(tree_info_samp_orig$nodes))
 
-tree_info_samp_orig
+# user needs to specify how person ids map to node ids
+library(dplyr)
+df_use = left_join(df_orig,df_key_id_orig_w_sort,
+									 c('pid'='id_orig'))
+
+
+
+# level 1
 
 # pre sort to sequential ids
+# helper function if user needs to convert tree info with sorted id values
+# can skip if user already in sorted id format
 sort_ids_tree_info = function(tree_info,df_key_id_orig_w_sort){
 	# tree_info = samp
 	# takeaway: need to pre sort nodes before using .TBS()
@@ -91,7 +106,14 @@ B1=50
 set.seed(4321);id_boot_1_sorted = RDStreeboot:::.TBS(tree_info_samp_sorted, B=B1)
 # set.seed(4321);id_boot_1 = RDStreeboot:::.TBS(samp, B=B1)
 
+# do not need to map back if 
 # map sorted its back to original ids
+# can remain using sorted ids IF the original edge list to lookup is
+# also using sorted id system
+# remap_tree(id_boot_desc_b=id_boot_sorted,
+# 					 df_edges_ances_elig = tree_info_samp_orig_sorted$edges)
+
+# Optional work with original ids
 id_boot_1_orig = lapply(id_boot_1_sorted,
 												FUN=plyr::mapvalues,
 												to=df_key_id_orig_w_sort$id_orig,  # reverse to/from
@@ -109,7 +131,8 @@ list_tib = vector(mode='list',length=B1)
 B2=10
 
 
-id_boot_1 = id_boot_1_orig
+# id_boot_1 = id_boot_1_orig
+id_boot_1 = id_boot_1_sorted
 
 for(b in seq_along(id_boot_1)){
 	# b=1
@@ -117,35 +140,50 @@ for(b in seq_along(id_boot_1)){
 	
 	# require original ids to lookup original edges
 	tree_info_b1 = remap_tree(id_boot_desc_b=id_boot_1[[b]],
-														df_edges_ances_elig = tree_info_samp_orig$edges)
+														## if using original ids
+														# df_edges_ances_elig = tree_info_samp_orig$edges  
+														## if using sorted ids (less book keeping)
+														df_edges_ances_elig = tree_info_samp_sorted$edges)
+	
 	# str(tree_info_b1,1)
 	
 	# Error in samp.adj.mat[cbind(samp$edges$node1, samp$edges$node2)] <- T : 
 	# 	subscript out of bounds
 	# id_dubboot_from_b1 = RDStreeboot:::.TBS(tree_info_b1, B=B2)
 	
-	# sort again before using 2nd level .TBS
-	tree_info_b1_sorted = sort_ids_tree_info(tree_info_b1,df_key_id_orig_w_sort)
+	## IF 'tree_info_b1' is using original ids
+	## df_edges_ances_elig = tree_info_samp_orig$edges
+	## sort again before using 2nd level .TBS
+	
+	# tree_info_b1_sorted = sort_ids_tree_info(tree_info_b1,df_key_id_orig_w_sort)
 	
 	
 	TBS_possibly = purrr::possibly(RDStreeboot:::.TBS,NULL)
-	id_dubboot_from_b1_sorted = TBS_possibly(tree_info_b1_sorted, B=B2)
+	id_dubboot_from_b1_sorted = TBS_possibly(tree_info_b1,
+																					 # tree_info_b1_sorted,
+																					 B=B2)
 	
-	# output map back to original ids
-	id_dubboot_from_b1 = lapply(id_dubboot_from_b1_sorted,
-															FUN=plyr::mapvalues,
-															to=df_key_id_orig_w_sort$id_orig,  # reverse to/from
-															from=df_key_id_orig_w_sort$id_ord,
-															warn_missing=FALSE)
 	
 	tab_b_bb = tibble::tibble(ids_b=list(id_boot_1[[b]]),
-														ids_bb=list(id_dubboot_from_b1))
+														# ids_bb=list(id_dubboot_from_b1)
+														ids_bb=list(id_dubboot_from_b1_sorted)
+														)
 	
 	list_tib[[b]] = tab_b_bb
 }
 
 str(list_tib,3)
 list_tib_b_bb = list_tib; rm(list_tib)
+str(list_tib_b_bb,3)
+
+## OPTIONAL: output map back to original ids
+## can do this later outside id resampling
+# id_dubboot_from_b1 = lapply(id_dubboot_from_b1_sorted,
+# 														FUN=plyr::mapvalues,
+# 														to=df_key_id_orig_w_sort$id_orig,  # reverse to/from
+# 														from=df_key_id_orig_w_sort$id_ord,
+# 														warn_missing=FALSE)
+
 
 # length(list_tib)
 
@@ -164,7 +202,7 @@ compute_quants_possibly = purrr::possibly(compute_quants,NA)
 
 
 # df_orig = samp$traits
-est_samp_orig = compute_quants(df_orig)
+est_samp_orig = compute_quants(df_use)
 
 
 str(list_tib_b_bb,2)
@@ -205,14 +243,14 @@ for(b in seq_along(id_boot_1)){
 	# then subset rows
 
 	ind_b = unlist(list_tib_b_bb[[b]][,'ids_b'])
-	# quant_boot_lvl_1 = compute_quants(df_4_estimate = df_orig[ind_b,])
+	# quant_boot_lvl_1 = compute_quants(df_4_estimate = df_use[ind_b,])
 	df_resamp = left_join(by='pid',
 												x=data.frame(pid=ind_b),
-												y=df_orig)
+												y=df_use)
 	# ind_b
 	quant_boot_lvl_1 = compute_quants_possibly(df_4_estimate = df_resamp)
 	
-	# df_subset = dplyr::filter(df_orig,nodes %in% ind_b)
+	# df_subset = dplyr::filter(df_use,nodes %in% ind_b)
 	# quant_boot_lvl_1 = compute_quants_possibly(df_4_estimate = df_subset)
 	
 	# equation 3 paper
@@ -233,7 +271,7 @@ for(b in seq_along(id_boot_1)){
 															FUN=function(xx){
 																df_resamp = left_join(by='pid',
 																					x=data.frame(pid=unlist(xx)),
-																					y=df_orig)
+																					y=df_use)
 																compute_quants_possibly(df_4_estimate = df_resamp)
 															})
 		
@@ -289,7 +327,7 @@ l_ref_root = ref_quants$root_pivot_0_b[floor(l_ref)]
 u_ref_root = ref_quants$root_pivot_0_b[ifelse(floor(u_ref)==0,1,floor(u_ref))]
 
 
-# est_samp_orig = compute_quants_possibly(df_orig)
+# est_samp_orig = compute_quants_possibly(df_use)
 
 ll_dtbs_pivot = est_samp_orig$est_samp - l_ref_root*est_samp_orig$se_samp
 ul_dtbs_pivot = est_samp_orig$est_samp - u_ref_root*est_samp_orig$se_samp
