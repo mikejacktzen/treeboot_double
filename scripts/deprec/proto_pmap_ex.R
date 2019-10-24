@@ -33,6 +33,7 @@ compute_est_tib = function(ids_b,ids_bb,...){
 	
 	df_use = arrange(df_use,id_ord)
 	
+	## for loop notation
 	# df_resamp = df_use[test$ids_b[[1]],]
 	
 	# if not ordered, need left join
