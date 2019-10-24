@@ -16,7 +16,7 @@ compute_quants = function(df_4_estimate){
 	se_samp = sqrt(diag(vcov(lm_samp))[ind_estimand])
 	test_stat_samp = est_samp/se_samp
 	# return(data.frame(est_samp,se_samp,test_stat_samp,t(confint(lm_samp)[ind_estimand,])))
-	return(data.frame(est_samp,se_samp,test_stat_samp))
+	return(data.frame(est_samp,se_samp))
 }
 
 # # quantities from original sample dataset (level 0) -----------------------------------------
