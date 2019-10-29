@@ -1,5 +1,7 @@
 
 # level 0 whole dataset ---------------------------------------------------
+
+require(plyr)
 library(dplyr)
 require(RDStreeboot)
 
@@ -27,6 +29,10 @@ samp0$nodes = as.numeric(unlist(list_v_and_e$vertices,use.names = FALSE))
 samp0$edges = data.frame(node1=as.numeric(list_v_and_e$edges$from),
 												 node2=as.numeric(list_v_and_e$edges$to))
 
+# probably safer to pre sort $nodes
+samp0$nodes = sort(samp0$nodes)
+# in case original sample is allowed to have redundant samp0$nodes
+
 # note that samp$nodes has unique(union(nodes,unlist(edges)))
 
 tree_info_samp_orig = samp0; rm(samp0)
@@ -44,6 +50,7 @@ str(df_orig)
 
 # creating this key needs population of all nodes uniqued
 all_nodes = unique(union(tree_info_samp_orig$nodes,unlist(tree_info_samp_orig$edges)))
+all_nodes = sort(unique(union(tree_info_samp_orig$nodes,unlist(tree_info_samp_orig$edges))))
 
 df_key_id_orig_w_rank = data.frame(id_orig=sort(all_nodes),
 																			 id_rank=seq_along(all_nodes))
@@ -61,7 +68,7 @@ df_use = left_join(df_orig,df_key_id_orig_w_rank,
 head(df_use)
 
 
-source('scripts/a_rank_ids_tree_info.R')
+source('~/temp_work_ts2/treeboot_double/scripts/a_rank_ids_tree_info.R')
 
 tree_info_samp_ranked = rank_ids_tree_info(tree_info_samp_orig,df_key_id_orig_w_rank)
 str(tree_info_samp_orig)
@@ -72,16 +79,18 @@ str(tree_info_samp_ranked)
 # resample ids ------------------------------------------------------------
 
 # level 1
-B1=50
-set.seed(4321);id_boot_1_ranked = RDStreeboot:::.TBS(tree_info_samp_ranked, B=B1)
+B1_pick=10
+set.seed(4321);id_boot_1_ranked = RDStreeboot:::.TBS(tree_info_samp_ranked, B=B1_pick)
 str(id_boot_1_ranked)
+
+all(TRUE==sapply(id_boot_1_ranked,function(xx){all(xx %in% tree_info_samp_ranked$nodes)}))
 
 # set.seed(4321);id_boot_1_orig = RDStreeboot:::.TBS(tree_info_samp_orig, B=B1)
 
 # level 2
 
-source('scripts/a_remap_tree.R')
-source("scripts/a_resample_id_tbs_dub.R")
+source('~/temp_work_ts2/treeboot_double/scripts/a_remap_tree.R')
+source("~/temp_work_ts2/treeboot_double/scripts/a_resample_id_tbs_dub.R")
 
 # ?resample_id_tbs_dub
 
@@ -90,13 +99,27 @@ source("scripts/a_resample_id_tbs_dub.R")
 # resample_id_tbs_dub(id_boot_1_ranked[[2]],B2=5)
 
 
-B2_pick = 50
+B2_pick = 5
 ids_resamp_b_bb = id_boot_1_ranked %>% 
-	purrr::map(.f=resample_id_tbs_dub,B2=B2_pick) %>% 
+	purrr::map(.f=resample_id_tbs_dub,B2=B2_pick,
+						 tree_info_samp_ranked=tree_info_samp_ranked) %>% 
 	do.call(rbind,.)
+
+# check that 2nd level bootstrap ids are subset of 1st level bootstrap ids
+
+all(TRUE==sapply(ids_resamp_b_bb[[2]],function(xx){all(unlist(xx) %in% tree_info_samp_ranked$nodes)}))
+
+all(max(tree_info_samp_ranked$nodes)>=sapply(ids_resamp_b_bb[[2]],function(xx){max(unlist(xx))}))
 
 ids_resamp_b_bb[1,][[1]]
 ids_resamp_b_bb[1,][[2]]
+ids_resamp_b_bb[[1]]
+
+unlist(ids_resamp_b_bb[6,1])
+unlist(ids_resamp_b_bb[6,2])
+
+table(unlist(ids_resamp_b_bb[[1]]))
+table(unlist(ids_resamp_b_bb[[2]]))
 
 str(ids_resamp_b_bb,2)
 
@@ -111,13 +134,14 @@ str(ids_resamp_b_bb,2)
 # }
 
 # example defined in 
-source('scripts/foo_my_estimate_func.R')
+source('~/temp_work_ts2/treeboot_double/scripts/foo_my_estimate_func.R')
+
 # View(compute_quants)
 library(purrr)
 compute_quants_possibly = purrr::possibly(compute_quants,otherwise=NA)
 
 # runs compute_quants_possibly over ids level 1 b and level 2 bb
-source('scripts/b_comp_est_over_ids_b_bb.R')
+source('~/temp_work_ts2/treeboot_double/scripts/b_comp_est_over_ids_b_bb.R')
 
 args(comp_est_over_ids_b_bb)
 # note, needs user def function 'compute_quants' as argument
@@ -132,16 +156,23 @@ head(df_use)
 # precompute estimate of whole dataset
 df_est_samp_orig = compute_quants_possibly(df_4_estimate = df_use)
 
+# B1*B2 evaluations of compute_quants_possibly()
+B1_pick * B2_pick
 
 # compute estimates over each resample id_b_bb
-est_b_bb_test = ids_resamp_b_bb[1:5,] %>% 
+est_b_bb_test = ids_resamp_b_bb %>% 
+	# ids_resamp_b_bb[1:5,] %>% 
 	pmap(.f=comp_est_over_ids_b_bb_possibly,  
 			 df_use=df_use,
 			 df_est_samp_orig=df_est_samp_orig,
 			 compute_quants=compute_quants_possibly) %>%
 	do.call(rbind,.)
 
-source("scripts/b_form_int_dubboot.R")
+str(est_b_bb_test)
+View(select(est_b_bb_test,-ids_b))
+
+
+source("~/temp_work_ts2/treeboot_double/scripts/b_form_int_dubboot.R")
 # mean(est_b_bb_test$est_b)
 
 form_int_dubboot(df_est_samp_orig=df_est_samp_orig,
@@ -166,6 +197,8 @@ df_orig = tibble::rownames_to_column(df_orig) %>%
 																 replacement=""))) %>% 
 	arrange(rowname)
 
+# pre sort $nodes attribute
+samp0$nodes = sort(samp0$nodes)
 tree_info_samp_orig = samp0; rm(samp0)
 str(tree_info_samp_orig)
 
@@ -179,16 +212,19 @@ df_use = left_join(df_orig,df_key_id_orig_w_rank,
 tree_info_samp_ranked = rank_ids_tree_info(tree_info_samp_orig,df_key_id_orig_w_rank)
 
 # level 1
-B1=500
+B1=50
 set.seed(4321);id_boot_1_ranked = RDStreeboot:::.TBS(tree_info_samp_ranked, B=B1)
 str(id_boot_1_ranked)
 
 # level 2
-B2_pick = 500
+B2_pick = 50
 ids_resamp_b_bb = id_boot_1_ranked %>% 
-	purrr::map(.f=resample_id_tbs_dub,B2=B2_pick) %>% 
+	purrr::map(.f=resample_id_tbs_dub,B2=B2_pick,tree_info_samp_ranked) %>% 
 	do.call(rbind,.)
+
 head(ids_resamp_b_bb)
+
+all(T==names(unlist(ids_resamp_b_bb[[2]]) %>% table()) %in% names(unlist(ids_resamp_b_bb[[1]]) %>% table()))
 
 # .TBS() sometimes unable to 2nd level resample 
 # based on provided 1st level resamples
@@ -198,9 +234,10 @@ sum(unlist(lapply(ids_resamp_b_bb$ids_bb,is.null)))
 # install.packages('furrr')
 library(furrr)
 # ?multisession
-plan(multisession, workers = 8)
 
 df_est_samp_orig = compute_quants_possibly(df_4_estimate = df_use)
+
+plan(multisession, workers = 8)
 
 est_b_bb = ids_resamp_b_bb %>% 
 	future_pmap(.f=comp_est_over_ids_b_bb_possibly,  
