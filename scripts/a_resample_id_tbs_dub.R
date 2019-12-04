@@ -48,20 +48,21 @@ resample_id_tbs_dub = function(id_boot_1_ranked,B2,tree_info_samp_ranked){
 		# output of tbs matches seq_along($nodes)
 
 
-		# all_nodes_b1 = unique(union(tree_info_b1$nodes,unlist(tree_info_b1$edges)))
+		# IMPORTANT: RE RANK IDS b4 2nd TBS
 		
-		# df_key_id_orig_w_rank_b1 = data.frame(id_orig=sort(all_nodes_b1),
-		# 																			id_rank=seq_along(all_nodes_b1))
-		# 
-		# df_key_id_orig_w_rank_b
-		# tree_info_b1_ranked = rank_ids_tree_info(tree_info_b1,df_key_id_orig_w_rank_b1)
-		# 
-		# tree_info_b1_ranked2 = tree_info_b1_ranked
-		# tree_info_b1_ranked2$nodes = unique(tree_info_b1_ranked$nodes)
+		all_nodes_b1 = unique(union(tree_info_b1$nodes,unlist(tree_info_b1$edges)))
+		df_key_id_orig_w_rank_b1 = data.frame(id_orig=sort(all_nodes_b1),
+																					id_rank=seq_along(all_nodes_b1))
+
+		
+		tree_info_b1_ranked = rank_ids_tree_info(tree_info_b1,df_key_id_orig_w_rank_b1)
+
+		tree_info_b1_ranked2 = tree_info_b1_ranked
+		tree_info_b1_ranked2$nodes = unique(tree_info_b1_ranked$nodes)
 		
 		TBS_possibly = purrr::possibly(RDStreeboot:::.TBS,NULL)
-		id_dubboot_from_b1_ranked = TBS_possibly(tree_info_b1,
-																						 # tree_info_b1_ranked2,
+		id_dubboot_from_b1_ranked = TBS_possibly(# tree_info_b1,
+																						 tree_info_b1_ranked2,
 																						 B=B2)
 		
 		# output has ids that are outside of tree_info_b1$nodes
@@ -71,7 +72,7 @@ resample_id_tbs_dub = function(id_boot_1_ranked,B2,tree_info_samp_ranked){
 		# ez lazy assumption that
 		# output of tbs matches seq_along(tree_info_b1$nodes)
 		
-		lapply(id_dubboot_from_b1_ranked,sort)
+		# lapply(id_dubboot_from_b1_ranked,sort)
 		
 		df_key_id_orig_w_rank_b1 = data.frame(id_rank=seq_along(tree_info_b1$nodes),
 																					id_orig=tree_info_b1$nodes)
@@ -83,6 +84,9 @@ resample_id_tbs_dub = function(id_boot_1_ranked,B2,tree_info_samp_ranked){
 																					to=df_key_id_orig_w_rank_b1$id_orig,
 																					warn_missing=FALSE)
 		
+		# lapply(id_dubboot_from_b1_allow_rep,function(xx){
+		# 	xx %in% id_boot_1
+		# })
 		
 		tab_b_bb = tibble::tibble(ids_b=list(id_boot_1),
 															# ids_b=list(id_boot_1[[b]]),

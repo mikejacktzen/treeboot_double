@@ -230,31 +230,35 @@ all(T==names(unlist(ids_resamp_b_bb[[2]]) %>% table()) %in% names(unlist(ids_res
 # based on provided 1st level resamples
 sum(unlist(lapply(ids_resamp_b_bb$ids_bb,is.null)))
 
-# compute estimates in parallel using furrr
-# install.packages('furrr')
-library(furrr)
-# ?multisession
-
-df_est_samp_orig = compute_quants_possibly(df_4_estimate = df_use)
-
-plan(multisession, workers = 8)
-
-est_b_bb = ids_resamp_b_bb %>% 
-	future_pmap(.f=comp_est_over_ids_b_bb_possibly,  
-							.progress = TRUE,
-							df_use=df_use,
-							df_est_samp_orig=df_est_samp_orig,
-							compute_quants=compute_quants_possibly) %>%
-	do.call(rbind,.)
-
-# close background workers
-plan(sequential) 
-
-est_b_bb$root_pivot_0_b %>% hist()
-est_b_bb$u_b %>% hist()
-
-form_int_dubboot(alpha=0.05,
-								 # alpha=0.5,
-								 df_est_samp_orig=df_est_samp_orig,
-								 df_ref_quants=na.omit(est_b_bb))
+## syntax of furr is difficult
+## if many 3 nested functions
+## swap to dopar
+# 
+# # compute estimates in parallel using furrr
+# # install.packages('furrr')
+# library(furrr)
+# # ?multisession
+# 
+# df_est_samp_orig = compute_quants_possibly(df_4_estimate = df_use)
+# 
+# plan(multisession, workers = 8)
+# 
+# est_b_bb = ids_resamp_b_bb %>% 
+# 	future_pmap(.f=comp_est_over_ids_b_bb_possibly,  
+# 							.progress = TRUE,
+# 							df_use=df_use,
+# 							df_est_samp_orig=df_est_samp_orig,
+# 							compute_quants=compute_quants_possibly) %>%
+# 	do.call(rbind,.)
+# 
+# # close background workers
+# plan(sequential) 
+# 
+# est_b_bb$root_pivot_0_b %>% hist()
+# est_b_bb$u_b %>% hist()
+# 
+# form_int_dubboot(alpha=0.05,
+# 								 # alpha=0.5,
+# 								 df_est_samp_orig=df_est_samp_orig,
+# 								 df_ref_quants=na.omit(est_b_bb))
 

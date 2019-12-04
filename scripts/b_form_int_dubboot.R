@@ -33,11 +33,26 @@ form_int_dubboot = function(df_est_samp_orig,
 	
 	# df_est_samp_orig = compute_quants_possibly(df_use)
 	
-	ll_dtbs_pivot = df_est_samp_orig$est_samp - l_ref_root*df_est_samp_orig$se_samp
-	ul_dtbs_pivot = df_est_samp_orig$est_samp - u_ref_root*df_est_samp_orig$se_samp
-	est_dubboot_out = data.frame(est_samp=df_est_samp_orig$est_samp,
-															 mean_est_b = mean(df_ref_quants$est_b),
-															 ll_dtbs_pivot,ul_dtbs_pivot)
+	# ll_dtbs_pivot = df_est_samp_orig$est_samp - l_ref_root*df_est_samp_orig$se_samp
+	# ul_dtbs_pivot = df_est_samp_orig$est_samp - u_ref_root*df_est_samp_orig$se_samp
+	
+	ll_dtbs_pivot = df_est_samp_orig[1] - l_ref_root*df_est_samp_orig[2]
+	ul_dtbs_pivot = df_est_samp_orig[1] - u_ref_root*df_est_samp_orig[2]
+	
+	if(ul_dtbs_pivot >= ll_dtbs_pivot){
+		ul=ul_dtbs_pivot
+		ll=ll_dtbs_pivot
+	}else{
+		ul=ll_dtbs_pivot
+		ll=ul_dtbs_pivot
+	}
+	
+	est_dubboot_out = data.frame(# est_samp=df_est_samp_orig$est_samp,
+		# mean_est_b = mean(df_ref_quants$est_b),
+		length_int = abs(ul_dtbs_pivot-ll_dtbs_pivot),
+		# ll_dtbs_pivot,ul_dtbs_pivot,
+		ll,ul
+		)
 	
 	return(est_dubboot_out)
 }
