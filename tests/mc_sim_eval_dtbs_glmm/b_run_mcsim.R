@@ -31,9 +31,9 @@ num.seeds_use = c(5)
 list_param_rds = expand.grid(data.frame(n_use=n_0_use,num.seeds_use,beta))
 rm(beta,n_0_use,num.seeds_use)
 
-source("~/temp_work_ts2/integ2margin_glmm/scripts/mc_sim_eval_dtbs_glmm/a_0_dtbs_helpers_all.R")
-source("~/temp_work_ts2/integ2margin_glmm/scripts/mc_sim_eval_dtbs_glmm/a_1_data_generating_process.R")
-source("~/temp_work_ts2/integ2margin_glmm/scripts/mc_sim_eval_dtbs_glmm/a_2_compute_quants.R")
+source("~/a_0_dtbs_helpers_all.R")
+source("~/a_1_data_generating_process.R")
+source("~/a_2_compute_quants.R")
 args(gen_data_rds)
 
 
