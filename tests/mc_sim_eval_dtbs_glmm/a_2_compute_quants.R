@@ -11,7 +11,13 @@ compute_quants = function(df_4_estimate){
 																	family = binomial())
 	
 	coef_marg = GLMMadaptive::marginal_coefs(fm,std_errors=TRUE,cores=1)
-	out_coef_marg = coef(coef_marg)[1:2]
+	# out_coef_marg = coef(coef_marg)[1:2]
+	
+	# new GLMMadaptive package issue is here
+	# new version outputs different 'coef_marg' structure
+	# getting estimate and standard error is now
+	out_coef_marg = coef_marg$coef_table[1:2]
+	
 	names(out_coef_marg) = c('est_samp','se_samp')
 	
 	# coef_marg_sand = GLMMadaptive::marginal_coefs(fm,std_errors=TRUE,cores=1,
